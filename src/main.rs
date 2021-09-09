@@ -1,10 +1,9 @@
 use serde_json::{from_reader, to_writer_pretty, Value};
+use std::io::{BufReader, stdin};
 
 use std::error::Error;
 use std::fs::File;
-use std::io::BufReader;
 use std::path::Path;
-use std::io;
 
 fn read_json_file<P: AsRef<Path>>(path: P) -> Result<Value, Box<dyn Error>> {
     // Open the file in read-only mode with buffer.
@@ -28,7 +27,7 @@ fn add_entry_to_json(_key: String, value: String) -> std::result::Result<(), ser
 fn user_input(target: String) -> String {
     println!("Enter the {} :", target);
     let mut input = String::new();
-    match io::stdin().read_line(&mut input) {
+    match stdin().read_line(&mut input) {
         Ok(_) => {
             input.trim().to_string()
         }
